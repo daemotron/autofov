@@ -1,5 +1,6 @@
 #include <CHeaders/XPLM/XPLMPlugin.h>
 
+#include "conf.h"
 #include "core.h"
 #include "fov.h"
 #include "log.h"
@@ -8,9 +9,11 @@
 PLUGIN_API int
 XPluginStart(char *outName, char *outSig, char *outDesc)
 {
-    strcpy(outName, "AutoFoV");
-    strcpy(outSig, "net.daemotron.autofov");
-    strcpy(outDesc, "Automatically set the field of view based on the aircraft loaded.");
+    strcpy(outName, CONF_PLUGIN_NAME);
+    strcpy(outSig, CONF_PLUGIN_SIGN);
+    strcpy(outDesc, CONF_PLUGIN_DESC);
+    strcat(outDesc, " version ");
+    strcat(outDesc, CONF_PLUGIN_VERS);
     return 1;
 }
 
