@@ -1,6 +1,7 @@
 #include <CHeaders/XPLM/XPLMPlugin.h>
 
 #include "core.h"
+#include "fov.h"
 #include "log.h"
 
 
@@ -30,6 +31,7 @@ XPluginDisable(void)
 PLUGIN_API int
 XPluginEnable(void)
 {
+    fov_init();
     return 1;
 }
 

@@ -14,6 +14,13 @@ extern "C" {
  */
 #define CONF_LOG_LEVEL LOG_DEBUG
 
+/* Default Field of View
+ *
+ * 75 seems to be a reasonable value - only used
+ * when no value can be detected.
+ */
+#define CONF_FOV_DEFAULT 75.0
+
 #ifdef	__cplusplus
 }
 #endif
