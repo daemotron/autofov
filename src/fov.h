@@ -6,8 +6,9 @@ extern "C" {
 #endif
 
 float fov_get();
-void fov_set(float);
 void fov_init();
+void fov_set(float);
+void fov_set_default();
 
 #ifdef	__cplusplus
 }

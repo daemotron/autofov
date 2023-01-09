@@ -22,7 +22,7 @@ fov_get()
 void
 fov_init()
 {
-    if(Default_FoV_Initialized == 0)
+    if (Default_FoV_Initialized == 0)
     {
         Default_FoV = fov_get();
         Default_FoV_Initialized = 1;
@@ -38,4 +38,11 @@ void
 fov_set(float fov)
 {
     XPLMSetDataf(XPLMFindDataRef("sim/graphics/view/field_of_view_deg"), fov);
+}
+
+
+void
+fov_set_default()
+{
+    fov_set(Default_FoV);
 }
