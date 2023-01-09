@@ -1,5 +1,6 @@
 #include <CHeaders/XPLM/XPLMPlugin.h>
 
+#include "aircraft.h"
 #include "conf.h"
 #include "core.h"
 #include "fov.h"
@@ -49,7 +50,8 @@ XPluginReceiveMessage(XPLMPluginID from, int msg, void *param)
         /*int idx = *(int*)param;*/
         if (param == 0)
         {
-            log_debug("Change of primary aircraft detected");
+            log_info("Change of primary aircraft detected");
+            aircraft_handle_new();
         }
         else
         {
