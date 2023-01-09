@@ -47,23 +47,15 @@ XPluginReceiveMessage(XPLMPluginID from, int msg, void *param)
 
     if (msg == XPLM_MSG_PLANE_LOADED)
     {
-        /*int idx = *(int*)param;*/
         if (param == 0)
         {
             log_info("Change of primary aircraft detected");
             aircraft_handle_new();
         }
-        else
-        {
-            log_debug("Change of secondary aircraft detected");
-        }
     }
     else if (msg == XPLM_MSG_WILL_WRITE_PREFS)
     {
-        if (param == 0)
-        {
-            log_info("Restoring default FoV before X-Plane writes its preferences");
-            fov_set_default();
-        }
+        log_info("Restoring default FoV before X-Plane writes its preferences");
+        fov_set_default();
     }
 }
