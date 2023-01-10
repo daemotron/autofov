@@ -90,7 +90,10 @@ initialize this new FoV value as its default.
 * Mingw-w64 for Win64 (https://winlibs.com/)
 * [Cmder](https://cmder.app/) console emulator (recommended, but no strict requirement)
 
-NB: make sure to add the Mingw bin directory to your PATH environment variable
+**NB:** make sure to add the Mingw bin directory to your PATH environment variable
+
+### macOS
+* Xcode and/or Xcode command line utilities
 
 ### Linux
 * gcc
@@ -109,3 +112,28 @@ mingw32-make
 This will create a file called `AutoFoV.xpl` within your `build` directory.
 To package a fat plugin, place this file withing the `win_x64` subfolder of the
 plugin's main directory.
+
+### macOS
+```
+mkdir build
+cd build
+cmake ../
+make
+```
+
+This will create a file called `AutoFoV/mac_x64/AutoFoV.xpl` within your `build`
+directory, ready to be packaged and shipped.
+
+**NB:** The Mac plugin is a hybrid build for both, x86_64 and arm64, running natively
+on both, Intel-based and Silicon-based Mac computers.
+
+### Linux
+```
+mkdir build
+cd build
+cmake ../
+make
+```
+
+This will create a file called `AutoFoV/mac_x64/AutoFoV.xpl` within your `build`
+directory, ready to be packaged and shipped.
