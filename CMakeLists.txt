@@ -5,6 +5,14 @@ set(CMAKE_CXX_COMPILER "g++")
 
 project (AutoFoV)
 
+# For CMake versions < 3.25
+if(CMAKE_VERSION VERSION_LESS "3.25")
+    if(UNIX AND NOT APPLE)
+        set(LINUX TRUE)
+        message("-- Linux detected")
+    endif()
+endif()
+
 # Detect SDK
 get_filename_component(SDK_PATH "./SDK/" ABSOLUTE)
 message("-- Detecting X-Plane SDK path")
