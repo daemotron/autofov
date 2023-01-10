@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include <CHeaders/XPLM/XPLMPlugin.h>
 
 #include "aircraft.h"
