@@ -3,6 +3,11 @@ cmake_minimum_required (VERSION 3.2)
 set(CMAKE_C_COMPILER "gcc")
 set(CMAKE_CXX_COMPILER "g++")
 
+# build universal 2 binary on macOS, supporting both, Intel Macs and Silicon (M1/M2)
+if(APPLE)
+    set (CMAKE_OSX_ARCHITECTURES "x86_64;arm64")
+endif()
+
 project (AutoFoV)
 
 # For CMake versions < 3.25
@@ -25,8 +30,8 @@ endif(NOT EXISTS ${SDK_PATH})
 configure_file("src/collisions" "collisions" COPYONLY)
 
 # Global compiler flags
-set (GCC_DEFAULT_FLAGS -std=c17 -Wall -Wunreachable-code -pipe -Wextra -Wshadow -Wfloat-equal -pedantic -fvisibility=hidden -O2 -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -W -DXPLM200 -DXPLM210 -DXPLM300)
-set (GXX_DEFAULT_FLAGS -std=c++17 -Wall -Wunreachable-code -pipe -Wextra -Wshadow -Wfloat-equal -pedantic -fvisibility=hidden -O2 -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -W -DXPLM200 -DXPLM210 -DXPLM300)
+set (GCC_DEFAULT_FLAGS -std=gnu17 -Wall -Wunreachable-code -pipe -Wextra -Wshadow -Wfloat-equal -pedantic -fvisibility=hidden -O2 -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -W -DXPLM200 -DXPLM210 -DXPLM300)
+set (GXX_DEFAULT_FLAGS -std=gnu++17 -Wall -Wunreachable-code -pipe -Wextra -Wshadow -Wfloat-equal -pedantic -fvisibility=hidden -O2 -fmessage-length=0 -D_FORTIFY_SOURCE=2 -fstack-protector -funwind-tables -fasynchronous-unwind-tables -W -DXPLM200 -DXPLM210 -DXPLM300)
 
 # Include files
 include_directories ("./src")
@@ -42,10 +47,9 @@ if(WIN32)
     set (CMAKE_C_COMPILER x86_64-w64-mingw32-gcc)
     set (CMAKE_CXX_COMPILER x86_64-w64-mingw32-g++)
     link_directories("${SDK_PATH}/Libraries/Win")
-    find_package(Threads REQUIRED)
     add_library(WIN_RELEASE_64 SHARED ${SOURCES})
     target_compile_options(WIN_RELEASE_64 PRIVATE ${GCC_DEFAULT_FLAGS} -s -c -fno-stack-protector -static-libgcc -static-libstdc++ -DXPLM200 -DIBM)
-    target_link_libraries(WIN_RELEASE_64 XPLM_64 XPWidgets_64 -static-libgcc -static-libstdc++ -static ${CMAKE_THREAD_LIBS_INIT})
+    target_link_libraries(WIN_RELEASE_64 XPLM_64 XPWidgets_64 -static-libgcc -static-libstdc++ -static ssp)
     set_target_properties(WIN_RELEASE_64 PROPERTIES LINK_FLAGS "-s -Wl,--version-script=collisions")
     set_target_properties(WIN_RELEASE_64 PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/AutoFoV/win_x64/")
     set_target_properties(WIN_RELEASE_64 PROPERTIES OUTPUT_NAME "AutoFoV.xpl")
