@@ -17,6 +17,9 @@ XPluginStart(char *outName, char *outSig, char *outDesc)
     strcpy(outDesc, CONF_PLUGIN_DESC);
     strcat(outDesc, " version ");
     strcat(outDesc, CONF_PLUGIN_VERS);
+
+    XPLMEnableFeature("XPLM_USE_NATIVE_PATHS", 1);
+
     return 1;
 }
 
