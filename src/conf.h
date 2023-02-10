@@ -43,7 +43,7 @@ extern "C" {
  * Set this to LOG_WARN for release builds, and
  * to LOG_DEBUG for development builds
  */
-#define CONF_LOG_LEVEL LOG_DEBUG
+#define CONF_LOG_LEVEL_DEFAULT LOG_DEBUG
 
 /* Default Field of View
  *
