@@ -36,7 +36,7 @@ extern "C" {
  * to X-Plane, but is appended to the description front matter, to
  * make the version information accessible to the end user.
  */
-#define CONF_PLUGIN_VERS "1.0"
+#define CONF_PLUGIN_VERS "1.0.dev"
 
 /* Log verbosity
  *
