@@ -1,0 +1,3 @@
+[submodule "xppl"]
+	path = xppl
+	url = https://github.com/daemotron/xppl.git
