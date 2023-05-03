@@ -4,7 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include <CHeaders/XPLM/XPLMPlanes.h>
+#include <XPLMPlanes.h>
 
 #include "aircraft.h"
 #include "core.h"
