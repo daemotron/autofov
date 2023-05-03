@@ -26,6 +26,14 @@ if(NOT EXISTS ${SDK_PATH})
     message(FATAL_ERROR "Missing SDK folder: ${SDK_PATH}")
 endif(NOT EXISTS ${SDK_PATH})
 
+# Detect XPPL
+get_filename_component(XPPL_PATH "./xppl/" ABSOLUTE)
+message("-- Detecting XPPL path")
+
+if(NOT EXISTS ${XPPL_PATH})
+    message(FATAL_ERROR "Missing XPPL folder: ${XPPL_PATH}")
+endif(NOT EXISTS ${XPPL_PATH})
+
 # Copy symbol collisions file
 configure_file("src/collisions" "collisions" COPYONLY)
 
@@ -39,8 +47,13 @@ include_directories ("${SDK_PATH}")
 include_directories ("${SDK_PATH}/CHeaders/XPLM")
 include_directories ("${SDK_PATH}/CHeaders/Wrappers")
 include_directories ("${SDK_PATH}/CHeaders/Widgets")
+include_directories ("${XPPL_PATH}/include")
 
-file(GLOB_RECURSE SOURCES "src/*.c")
+file(GLOB_RECURSE AUTOFOV_SOURCES "src/*.c")
+file(GLOB_RECURSE XPPL_COMMON_SOURCES "xppl/xppl_common/*.c")
+file(GLOB_RECURSE XPPL_CONFIG_SOURCES "xppl/xppl_config/*.c")
+
+set(SOURCES ${AUTOFOV_SOURCES} ${XPPL_COMMON_SOURCES} ${XPPL_CONFIG_SOURCES})
 
 if(WIN32)
     cmake_policy(SET CMP0015 NEW)
