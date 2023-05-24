@@ -9,7 +9,7 @@ extern "C" {
 
 void aircraft_get_fov_path(char *, size_t);
 float aircraft_get_fov();
-void aircraft_handle_new();
+void aircraft_handle_new(float);
 
 #ifdef	__cplusplus
 }

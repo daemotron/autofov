@@ -6,10 +6,11 @@
 
 #include <XPLMPlanes.h>
 
+#include <xppl_float.h>
+#include <xppl_log.h>
+
 #include "aircraft.h"
-#include "core.h"
 #include "fov.h"
-#include "log.h"
 
 
 void
@@ -25,23 +26,16 @@ aircraft_get_fov_path(char *buffer, size_t buflen)
     memset(buffer, '\0', buflen);
     if (buflen >= (strlen(path_name) + 1))
     {
-        strcpy(buffer, path_name);
+        strncpy(buffer, path_name, 2047);
         buffer[strlen(path_name)-3] = 'f';
         buffer[strlen(path_name)-2] = 'o';
         buffer[strlen(path_name)-1] = 'v';
     }
     
     /* this block is for debug logging only */
-    char message[3072];
-    memset(message, '\0', 3072);
-    sprintf(message, "Aircraft file detected: %s", file_name);
-    log_debug(message);
-    memset(message, '\0', 3072);
-    sprintf(message, "Aircraft path detected: %s", path_name);
-    log_debug(message);
-    memset(message, '\0', 3072);
-    sprintf(message, "Aircraft fov file path: %s", buffer);
-    log_debug(message);
+    xppl_log_debug("Aircraft file detected: %s", file_name);
+    xppl_log_debug("Aircraft path detected: %s", path_name);
+    xppl_log_debug("Aircraft fov file path: %s", buffer);
 }
 
 
@@ -90,27 +84,23 @@ aircraft_get_fov()
 
 
 void
-aircraft_handle_new()
+aircraft_handle_new(float default_fov)
 {
     float custom_fov = aircraft_get_fov();
 
-    if ((int)roundf(custom_fov) < 0)
+    if (custom_fov < 0.0)
     {
-        fov_set_default();
-        log_info("No custom FoV setting found for this aircraft, setting default...");
+        fov_set(default_fov);
+        xppl_log_info("No custom FoV setting found for this aircraft, setting default of %.2f°", default_fov);
     }
-    else if ((int)roundf(custom_fov) == 0)
+    else if (xppl_float_almost_equal_f(custom_fov, 0.0))
     {
-        fov_set_default();
-        log_warn("Invalid custom FoV setting found for this aircraft, setting default...");
+        fov_set(default_fov);
+        xppl_log_warn("Invalid custom FoV setting found for this aircraft, setting default of %.2f°", default_fov);
     }
     else
     {
-        char msg[200];
-        memset(msg, '\0', 200);
-
         fov_set(custom_fov);
-        sprintf(msg, "Custom FoV setting found for this aircraft, setting FoV to %.2f°", custom_fov);
-        log_info(msg);
+        xppl_log_info("Custom FoV setting found for this aircraft, setting FoV to %.2f°", custom_fov);
     }
 }
