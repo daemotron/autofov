@@ -1,48 +1,66 @@
+#include <stdbool.h>
+
 #include <XPLMDataAccess.h>
+
+#include <xppl_float.h>
+#include <xppl_log.h>
 
 #include "conf.h"
 #include "fov.h"
-#include "log.h"
 
 
-static float Default_FoV = CONF_FOV_DEFAULT;
 static XPLMDataRef FoV_Ref = NULL;
-static int Default_FoV_Initialized = 0;
+static int FoV_Initialized = false;
+
+
+bool
+fov_init(void)
+{
+    FoV_Ref = XPLMFindDataRef(FOV_DATA_REF);
+    if (FoV_Ref == NULL || !XPLMIsDataRefGood(FoV_Ref))
+    {
+        FoV_Initialized = false;
+        xppl_log_error("FoV initialisation failed: could not initialize data ref %s", FOV_DATA_REF);
+        return false;
+    }
+    FoV_Initialized = true;
+    return true;
+}
+
+
+void
+fov_destroy(void)
+{
+    FoV_Ref = NULL;
+}
 
 
 float
-fov_get()
+fov_get(void)
 {
-    return XPLMGetDataf(FoV_Ref);
+    float result = XPLMGetDataf(FoV_Ref);
+    if (xppl_float_almost_equal_f(result, 0.0))
+    {
+        return CONF_FOV_DEFAULT;
+    }
+    return result;
 }
 
 
-void
-fov_init()
-{
-    if (FoV_Ref == NULL)
-    {
-        FoV_Ref = XPLMFindDataRef("sim/graphics/view/field_of_view_deg");
-    }
-
-    if (Default_FoV_Initialized == 0)
-    {
-        Default_FoV = fov_get();
-        Default_FoV_Initialized = 1;
-        log_debug("Default field of view initialized as %.2f°", Default_FoV);
-    }
-}
-
-
-void
+bool
 fov_set(float fov)
 {
-    XPLMSetDataf(FoV_Ref, fov);
-}
-
-
-void
-fov_set_default()
-{
-    fov_set(Default_FoV);
+    if (FoV_Initialized && XPLMCanWriteDataRef(FoV_Ref))
+    {
+        XPLMSetDataf(FoV_Ref, fov);
+        if (xppl_float_almost_equal_f(fov, XPLMGetDataf(FoV_Ref)))
+        {
+            xppl_log_debug("FoV successfully set to %f", fov);
+            return true;
+        }
+        xppl_log_error("Failed to set FoV to %f", fov);
+        return false;
+    }
+    xppl_log_error("Cannot set FoV: module not initialized or data ref not writeable");
+    return false;
 }

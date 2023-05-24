@@ -5,10 +5,12 @@
 extern "C" {
 #endif
 
-float fov_get();
-void fov_init();
-void fov_set(float);
-void fov_set_default();
+#define FOV_DATA_REF "sim/graphics/view/field_of_view_deg"
+
+bool fov_init(void);
+void fov_destroy(void);
+float fov_get(void);
+bool fov_set(float);
 
 #ifdef	__cplusplus
 }
