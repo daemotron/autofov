@@ -65,20 +65,22 @@ or
 
 to configure a custom field of view of 65 degrees.
 
-## Important Note
-Please note that AutoFoV will detect a default FoV from X-Plane's settings, and
-will restore this FoV value during shutdown, ensuring X-Plane writes this default
-value back into its configuration files, and not any value temporarily set for
-a specific aircraft. **This behaviour however prevents you from setting a new default
-FoV value in X-Plane's settings dialogue while AutoFoV is loaded** - AutoFoV will
-override this newly set value during shutdown and revert X-Plane's settings back
-to their original value.
+## Configuring AutoFoV
+AutoFoV uses a configuration file, stored under `Output/autofov/config.txt`
+(relative to X-Plane's root directory). The file looks like this:
 
-To work around this limitation, open the plugin manager and disable AutoFoV before
-configuring a new default field of view in X-Plane's setting dialogue. Shut down
-X-Plane without re-enabling AutoFoV, and your new FoV default value should be
-saved in X-Plane's configuration files. Once loading X-Plane again, AutoFoV will
-initialize this new FoV value as its default.
+```ini
+# AutoFoV Configuration
+# =====================
+
+# Default FoV to be used when no aircraft-specific FoV is defined
+fov_default = 60.00
+```
+
+When run for the first time, AutoFoV will detect a default FoV from X-Plane's
+settings, and use it to initialize this file (if it doesn't exist already). You
+can adjust the default FoV value to your liking, if the detected value is not
+what you want.
 
 # Building AutoFoV
 
