@@ -5,7 +5,7 @@
 extern "C" {
 #endif
 
-#include <xppl.h>
+#include <xppl_log.h>
 
 /* Plugin Name
  *
@@ -51,6 +51,12 @@ extern "C" {
  * when no value can be detected.
  */
 #define CONF_FOV_DEFAULT 75.0
+
+/* Configuration File Name
+ *
+ * relative to X-Plane's root directory
+ */
+#define CONF_FILE "Output/autofov/config.txt"
 
 #ifdef	__cplusplus
 }
