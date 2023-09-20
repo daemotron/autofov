@@ -85,6 +85,7 @@ what you want.
 # Building AutoFoV
 
 ## Prerequisites
+* [Git](https://git-scm.com/) 2.14 or newer
 * [CMake](https://cmake.org/) 3.2 or newer
 * A copy of the [X-Plane SDK](https://developer.x-plane.com/sdk/plugin-sdk-downloads/), placed in the `SDK` folder (same level as `src`)
 
@@ -100,6 +101,36 @@ what you want.
 ### Linux
 * gcc
 * GNU make
+
+## Get the Source Code
+AutoFoV uses [XPPL](https://github.com/daemotron/xppl) as a submodule. When cloning or
+updating the AutoFoV sources, you also need to check out the corresponding XPPL submodule.
+
+### Fresh Clone
+```
+git clone --recurse-submodules https://github.com/daemotron/autofov.git
+```
+
+Alternatively, you can clone and checkout in two separate steps:
+
+```
+git clone https://github.com/daemotron/autofov.git
+cd autofov
+git submodule update --init --recursive
+```
+
+### Update Existing Clone
+```
+git pull --recurse-submodules
+```
+
+### Update XPPL to the Latest Version
+Caution: XPPL updates must be separated from feature development, since they could
+potentially break existing code.
+
+```
+git submodule update --remote xppl
+```
 
 ## Compiling
 
