@@ -45,8 +45,7 @@ aircraft_get_fov()
     char fov_path[2048];
     char buffer[16];
     int i = 0;
-    char c = '\0';
-    FILE *fov_file;
+    char c;
     memset(fov_path, '\0', 2048);
     memset(buffer, '\0', 16);
 
@@ -59,7 +58,7 @@ aircraft_get_fov()
     }
 
     /* if the file can't be opened for whatever reason, return -1 */
-    fov_file = fopen(fov_path, "r");
+    FILE *fov_file = fopen(fov_path, "r");
     if (fov_file == NULL)
     {
         return -1.0;
@@ -68,7 +67,7 @@ aircraft_get_fov()
     /* read file byte by byte as long as only figures or a decimal point are read, to a maximum of 15 characters */
     while ((c = fgetc(fov_file))!=EOF)
     {
-        if ((i < 15) && (((c >= 46) && (c <= 57)) || (c == 46)))
+        if ((i < 15) && ((c >= 46) && (c <= 57)))
         {
             buffer[i] = c;
             i++;
@@ -84,9 +83,9 @@ aircraft_get_fov()
 
 
 void
-aircraft_handle_new(float default_fov)
+aircraft_handle_new(const float default_fov)
 {
-    float custom_fov = aircraft_get_fov();
+    const float custom_fov = aircraft_get_fov();
 
     if (custom_fov < 0.0)
     {
