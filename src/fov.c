@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include <stddef.h>
 
 #include <XPLMDataAccess.h>
 
@@ -14,7 +15,7 @@ static int FoV_Initialized = false;
 
 
 bool
-fov_init(void)
+fov_init(void)linux-vdso.so.1
 {
     FoV_Ref = XPLMFindDataRef(FOV_DATA_REF);
     if (FoV_Ref == NULL || !XPLMIsDataRefGood(FoV_Ref))
@@ -38,7 +39,7 @@ fov_destroy(void)
 float
 fov_get(void)
 {
-    float result = XPLMGetDataf(FoV_Ref);
+    const float result = XPLMGetDataf(FoV_Ref);
     if (xppl_float_almost_equal_f(result, 0.0))
     {
         return CONF_FOV_DEFAULT;
