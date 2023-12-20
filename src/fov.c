@@ -15,7 +15,7 @@ static int FoV_Initialized = false;
 
 
 bool
-fov_init(void)linux-vdso.so.1
+fov_init(void)
 {
     FoV_Ref = XPLMFindDataRef(FOV_DATA_REF);
     if (FoV_Ref == NULL || !XPLMIsDataRefGood(FoV_Ref))
